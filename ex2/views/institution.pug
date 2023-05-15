@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    .w3-card-4
+        header.w3-container.w3-teal
+            h1 Instituição: #{nomeInst}
+            h1 NIPC: #{id}
+
+    .w3-container
+        table.w3-table-all
+            tr
+                th ID
+                th Inicio do Contrato
+                th Fim do Contrato
+                th Instituição
+                th Áreas de Investigação
+            each e in contracts
+                tr 
+                    td 
+                        a(href="/"+e._id)= e._id
+                    td= e.DataInicioContrato
+                    td= e.DataFimContrato
+                    td= e.AreasInvestigacao
+
+    footer.w3-container.w3-teal
+        h5 #[a(href='/') Back to Main Page]

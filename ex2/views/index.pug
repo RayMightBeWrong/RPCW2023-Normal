@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    header.w3-container.w3-teal
+        h1 Contratos
+        h5 Número de Contratos: #{nr}
+
+    .w3-container
+        table.w3-table-all
+            tr
+                th ID
+                th Inicio do Contrato
+                th Fim do Contrato
+                th Instituição
+                th Áreas de Investigação
+            each e in contracts
+                tr 
+                    td 
+                        a(href="/"+e._id)= e._id
+                    td= e.DataInicioContrato
+                    td= e.DataFimContrato
+                    td
+                        a(href="/inst/"+e.NIPCInstituicao)= e.NomeInstituicao
+                    td= e.AreasInvestigacao

@@ -28,8 +28,23 @@ Para ver quantos contratos foram iniciados em cada ano, é feito uma procura e v
 
 
 EX1:
-Para iniciar a API de dados basta fazer 'npm install' e 'npm start' dentro da pasta ex1/
+Para iniciar a API de dados basta fazer 'npm install' e 'npm start' dentro da pasta ex1/.
+
+Na criação do modelo que abstrai um contrato optei por não definir um ID, e deixar o MongoDB criar IDs únicos para entrada. Logo quando for feito um GET /contracts/:id, o servidor irá responder com a entrada existente na coleção que terá _id == id.
+
+A maior parte dos pedidos a que a API responde são simples queries feitas ao MongoDB com o mongoose:
+GET /contracts -> find()
+GET /contracts/:id: -> findOne()
+POST /contracts -> create()
+DELETE /contracts/:id -> deleteOne()
+
+GET /contracts?year=YYYY -> contract.find({DataInicioContrato: {$regex: regex}})
+GET /contracts?inst=AAA -> contract.find({NIPCInstituicao: inst})
+GET /contracts/courses -> contract.aggregate([ {$group: {_id: '$Curso'}} ])
+GET /contracts/institutions -> contract.aggregate([{$group: {_id: '$NIPCInstituicao', Instituicao: { "$first": "$NomeInstituicao"}}} ])
 
 
 EX2:
-Para iniciar o servidor web basta fazer 'npm install' e 'npm start' dentro da pasta ex2/
+Para iniciar o servidor web basta fazer 'npm install' e 'npm start' dentro da pasta ex2/.
+
+

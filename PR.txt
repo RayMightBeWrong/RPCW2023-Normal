@@ -1,1 +1,35 @@
-blah
+A persistência dos dados contidos no dataset é feita no MongoDB numa base de dados chamada scienceJobs, numa coleção chamada contracts.
+
+Não foram feitas quaisquer alterações ao dataset base e a persistência dos dados no MongoDB foi feita com o comando 'mongoimport -d scienceJobs -c contracts --file nome_do_ficheiro --jsonArray'.
+
+
+QUERIES MONGODB:
+1. db.contracts.countDocuments() 
+	ou 
+   db.contracts.find().count()
+	O dataset tinha originalmente 17943 entradas.
+
+
+2. db.contracts.aggregate([ {$match: {NIPCInstituicao: 501577840}}, {$group: {_id: '$NIPCInstituicao', count: {$sum: 1}}} ])
+	O dataset tinha originalmente 260 entradas relativas à Universidade do Minho
+
+É feita uma query aggregate com um contador para cada entrada que dê match com o NIPC da Instituição, neste caso 501577840, que é o NIPC da Universidade do Minho.
+
+
+3. db.contracts.aggregate([ {$group: {_id: '$AreaCNAEF'}} ]).sort({ _id: 1 })
+
+
+4. db.contracts.find({ DataInicioContrato: { $regex: /......2019/ } }).count()
+
+Para ver quantos contratos foram iniciados em cada ano, é feito uma procura e verifica-se em cada entrada se, com uma expressão regular, se o ano na data de início é o pretentido. Depois faz-se um count da lista obtida.
+
+5. db.contracts.aggregate([ {$group: {_id: '$NIPCInstituicao', count: {$sum: 1}}} ])
+
+
+
+EX1:
+Para iniciar a API de dados basta fazer 'npm install' e 'npm start' dentro da pasta ex1/
+
+
+EX2:
+Para iniciar o servidor web basta fazer 'npm install' e 'npm start' dentro da pasta ex2/
